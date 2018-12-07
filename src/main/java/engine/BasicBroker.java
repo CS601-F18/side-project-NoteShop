@@ -42,8 +42,10 @@ public class BasicBroker<T> implements Broker<T> {
 		// TODO Auto-generated method stub
 		lock.writeLock().lock();
 		if(!subList.containsKey(tag)) {
+			System.out.println("not contain key");
 			ArrayList<Subscriber<T>> list = new ArrayList<Subscriber<T>>();
 			list.add(subscriber);
+			System.out.println(list.size());
 			subList.put(tag, list);
 		}else {
 			subList.get(tag).add(subscriber);

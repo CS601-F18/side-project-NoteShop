@@ -32,11 +32,17 @@ public class AsyncUnorderedDispatchBroker<T> extends BasicBroker<T> {
 	public void publish(T item) {
 		Note note = (Note) item;
 		HashSet<String> tag = note.getTags();
+		System.out.println(tag.size());
 		HashSet<Subscriber<T>> set = new HashSet<Subscriber<T>>();
 		
 		lock.readLock().lock();
+		for(String s: subList.keySet()) {
+			System.out.println("subList has tags: " + s);
+		}
 		for(String t: tag) {
-			ArrayList<Subscriber<T>> list = this.subList.get(tag);
+			System.out.println("we want to get: " + t);
+			ArrayList<Subscriber<T>> list = this.subList.get(t);
+			System.out.println(list.size());
 			for(Subscriber<T> sub: list) {
 				set.add(sub);
 			}

@@ -64,11 +64,14 @@ public class GreatDataBase {
 			while(set.next()) {
 				String tagBox = set.getString("tagBox").toLowerCase();
 				String userId = set.getString("userId");
+				System.out.println(tagBox);
 				String[] tags = tagBox.split("\\s+");
 				NoteUser user = new NoteUser(this.links, userId, b);
 				this.map.put(userId, user);
 				for(String tag: tags) {
-					user.addTag(tag);
+					if(!tag.trim().equals("")) {
+						user.addTag(tag);
+					}
 				}
 			}
 			
@@ -202,9 +205,13 @@ public class GreatDataBase {
 	
 	public boolean publish(String noteId, String title, String body, String tags, String creator) {
 		HashSet<String> tagSet = NoteFactory.getFreqTags(body);
+		System.out.println(tagSet.size() + " 1.1");
 		String fTags = finalTags(tags, tagSet);
 		
 		Note note = new Note(noteId, tagSet);
+//		for(String s: tagSet) {
+//			System.out.println(s);
+//		}
 		this.b.publish(note);
 		
 		return this.notes.newNotes(noteId, title, body, fTags, creator);
@@ -214,7 +221,9 @@ public class GreatDataBase {
 		String res = " ";
 		String[] args = tags.split("\\s+");
 		for(String s: args) {
-			tagSet.add(s.toLowerCase());
+			if(!s.trim().equals("")) {
+				tagSet.add(s.toLowerCase());
+			}
 		}
 		for(String s: tagSet) {
 			res += " " + s;
@@ -253,9 +262,8 @@ public class GreatDataBase {
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean saveUserData(String userId, String password, 
-			String firstName, String lastName, String detail,
-			String tagBox, int newNote, String own, String others) throws SQLException {
+	public boolean saveUserData(String userId, String password, String firstName, 
+			String lastName, String detail, String tagBox) throws SQLException {
 		try {
 			this.userLock.writeLock().lock();
 			return users.saveUserData(userId, password, firstName, lastName, detail, tagBox);

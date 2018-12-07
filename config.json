@@ -1,0 +1,1 @@
+{"username":"user45","password":"user45","url":"jdbc:mysql://127.0.0.1:3306/","database":"user45","timezone":"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","userTable":"users","eventTable":"Events","ticketTable":"Tickets","noteTable":"notes","chatPort":"9090","linkTable":"links"}
