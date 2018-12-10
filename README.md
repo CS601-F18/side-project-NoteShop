@@ -15,6 +15,7 @@ Introduction: This project would make use of the CS 601 Project 2-Inverted Index
 <br>
 
 * >**_User Setting Interface_**
+    * display all the user data and the tags which is in the tag box
     * allow user to add more accept tags into their tag box to receive the notes which have the tags
 <br>
 
