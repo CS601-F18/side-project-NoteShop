@@ -15,7 +15,6 @@ Introduction: This project would make use of the CS 601 Project 2-Inverted Index
 <br>
 
 * >**_User Setting Interface_**
-    * allow user to modify username, password
     * allow user to add more accept tags into their tag box to receive the notes which have the tags
 <br>
 
@@ -29,14 +28,13 @@ Introduction: This project would make use of the CS 601 Project 2-Inverted Index
 * >**_Publish Notes_**
     * allow user to publish a note by entering the body of the note and add tags
     * the logic engine will also automatically generate the additional tags by the following logic:
-    * note -> inverted index -> term frequency hashMap -> select the term which appeal most frequently <br>
-      -> select the term which length is larger than 4(may be changed) -> add into the tags
+    * note -> inverted index note factory -> term frequency hashMap -> select the term which appeal most frequently <br>
+      -> select the term which pass the stop word test -> add into the tags
     * send to all the subscribers whose tag box have one of the tags by the publisher-broker-subscriber engine.
     
 <br>
 
 * >**_Note Box_**
-    * main page will remind the user if a new note is sent into his or her box
     * display all the notes writen by the user
     * display all the notes came from the others
     
@@ -46,14 +44,7 @@ Introduction: This project would make use of the CS 601 Project 2-Inverted Index
     * use mysql to store all the user settings and tag box
     * also store all the notes (not sure if mysql can store so long text, may be changed)
     
-<br>
-
-* >**_Optional Features (if enough time)_** 
-    * note ranking system
-    * invited register system
-    * follower system
-    * pay to get the note by using the credit from publishing notes, the higher score your note get, the more credit you can get
-    
+<br>  
 <br>  
 <br>
 <br>
