@@ -42,10 +42,13 @@ public class AsyncUnorderedDispatchBroker<T> extends BasicBroker<T> {
 		for(String t: tag) {
 			System.out.println("we want to get: " + t);
 			ArrayList<Subscriber<T>> list = this.subList.get(t);
-			System.out.println(list.size());
-			for(Subscriber<T> sub: list) {
-				set.add(sub);
+			if(list != null) {
+				System.out.println(list.size());
+				for(Subscriber<T> sub: list) {
+					set.add(sub);
+				}
 			}
+			
 		}
 		lock.readLock().unlock();
 		

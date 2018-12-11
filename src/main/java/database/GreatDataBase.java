@@ -56,6 +56,9 @@ public class GreatDataBase {
 		readDataBase();
 	}
 	
+	/**
+	 * read from the mysql database to start the engine
+	 */
 	public void readDataBase() {
 		this.map = new HashMap<String, Subscriber>();
 		
@@ -191,9 +194,10 @@ public class GreatDataBase {
 	public ResultSet getUserIncomeNote(String userId) throws SQLException {
 		String stmt = "SELECT * FROM links join notes "
 				+ "on links.noteId=notes.noteId "
-				+ "where userId=?";
+				+ "where userId = ? and not creator = ?";
 		PreparedStatement select = con.prepareStatement(stmt);
 		select.setString(1, userId);
+		select.setString(2, userId);
 		linkLock.readLock().lock();
 		noteLock.readLock().lock();
 		ResultSet res = select.executeQuery();
@@ -202,21 +206,38 @@ public class GreatDataBase {
 		return res;
 	}
 	
-	
-	public boolean publish(String noteId, String title, String body, String tags, String creator) {
+	/**
+	 * publish a new note by the title, body, tags and creator
+	 * @param title
+	 * @param body
+	 * @param tags
+	 * @param creator
+	 * @return
+	 */
+	public boolean publish(String title, String body, String tags, String creator) {
+		//call note factory to get the tagSet
 		HashSet<String> tagSet = NoteFactory.getFreqTags(body);
-		System.out.println(tagSet.size() + " 1.1");
 		String fTags = finalTags(tags, tagSet);
 		
-		Note note = new Note(noteId, tagSet);
-//		for(String s: tagSet) {
-//			System.out.println(s);
-//		}
-		this.b.publish(note);
-		
-		return this.notes.newNotes(noteId, title, body, fTags, creator);
+		noteLock.writeLock().lock();
+		int id = this.notes.newNotes(title, body, fTags, creator);
+		if(id != -1) {
+			Note note = new Note(id, tagSet);
+			this.b.publish(note);
+			noteLock.writeLock().unlock();
+			return true;
+		}
+		noteLock.writeLock().unlock();
+		return false;
 	}
 	
+	/**
+	 * add the existing tags into the auto generated tagSet
+	 * by the NoteFactory
+	 * @param tags
+	 * @param tagSet
+	 * @return
+	 */
 	public String finalTags(String tags, HashSet<String> tagSet) {
 		String res = " ";
 		String[] args = tags.split("\\s+");
@@ -275,7 +296,14 @@ public class GreatDataBase {
 		
 	}
 	
+	/**
+	 * add a new tag into the users tag box
+	 * @param userId
+	 * @param tag
+	 * @return
+	 */
 	public boolean addTag(String userId, String tag) {
+		tag = tag.toLowerCase();
 		NoteUser user = (NoteUser) this.map.get(userId);
 		user.addTag(tag);
 		return this.users.addData(userId, tag, "tagBox");
@@ -286,7 +314,7 @@ public class GreatDataBase {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ResultSet getAllEvents() throws SQLException {
+	public ResultSet getAllNotes() throws SQLException {
 		this.noteLock.readLock().lock();
 		ResultSet res = this.notes.getAllResult();
 		this.noteLock.readLock().unlock();
@@ -311,6 +339,22 @@ public class GreatDataBase {
 	/**
 	 * get the note data by the query and the 
 	 * value of the query
+	 * @param query
+	 * @param value
+	 * @return
+	 * @throws SQLException
+	 */
+	public ResultSet getNoteData(String query, int value) throws SQLException {
+		this.noteLock.readLock().lock();
+		ResultSet res = this.notes.getResult(query, value);
+		this.noteLock.readLock().unlock();
+		return res;
+	}
+	
+	/**
+	 * get the note data by the query and the 
+	 * value of the query
+	 * String version
 	 * @param query
 	 * @param value
 	 * @return

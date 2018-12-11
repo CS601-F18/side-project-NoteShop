@@ -30,13 +30,13 @@ public class LinkBase extends BasicBase{
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean newLink(String userId, String noteId){
+	public boolean newLink(String userId, int noteId){
 		//open the link insert the parameter into the table
 		try {
 			String state = "INSERT INTO " + table + " (userId, noteId) VALUES (?, ?)";
 			PreparedStatement insertStmt = con.prepareStatement(state);
 			insertStmt.setString(1, userId);
-			insertStmt.setString(2, noteId);
+			insertStmt.setInt(2, noteId);
 			insertStmt.execute();
 			return true;
 		} catch (SQLException e) {

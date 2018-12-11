@@ -71,6 +71,13 @@ public class UserBase extends BasicBase{
 		return true;
 	}
 	
+	/**
+	 * append any piece of data to the existing data
+	 * @param userId
+	 * @param newData
+	 * @param query
+	 * @return
+	 */
 	public boolean addData(String userId, String newData, String query) {
 		try {
 			ResultSet set = super.getResult("userId", userId);

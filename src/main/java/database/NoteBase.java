@@ -12,23 +12,40 @@ public class NoteBase extends BasicBase{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public boolean newNotes(String noteId, String name, String body, String tags, String creator) {	
+	/**
+	 * save a new note into the note base
+	 * return the auto increment note id
+	 * if failed, return -1;
+	 * @param name
+	 * @param body
+	 * @param tags
+	 * @param creator
+	 * @return
+	 */
+	public int newNotes(String name, String body, String tags, String creator) {	
 		//open the link insert the parameter into the table
-		String state = "INSERT INTO " + table + " (noteId, name, body, tags, creator) VALUES (?, ?, ?, ?, ?)";
+		String state = "INSERT INTO " + table + " (name, body, tags, creator) VALUES (?, ?, ?, ?)";
 		
 		try {
 			PreparedStatement insertStmt = con.prepareStatement(state);
-			insertStmt.setString(1, noteId);
-			insertStmt.setString(2, name);
-			insertStmt.setString(3, body);
-			insertStmt.setString(4, tags);
-			insertStmt.setString(5, creator);
+			insertStmt.setString(1, name);
+			insertStmt.setString(2, body);
+			insertStmt.setString(3, tags);
+			insertStmt.setString(4, creator);
 			insertStmt.execute();
-			return true;
+			
+			state = "select last_insert_id()";
+			PreparedStatement idStmt = con.prepareStatement(state);
+			ResultSet res = idStmt.executeQuery();
+			int id = -1;
+			while(res.next()) {
+				id = res.getInt("last_insert_id()");
+			}
+			return id;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
 	}
 	
