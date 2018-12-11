@@ -37,7 +37,7 @@ public class NoteServlet extends BaseServlet{
 				out.println("<p>Title: " + title + "</p>");
 				out.println("<p>Author: " + author + "</p>");
 				out.println("<p>Tags: " + tags + "</p>");
-				out.println("<p>" + body + "</p>");
+				out.println("<br><br><textarea style=\"width:800px;height:600px;\">" + body + "</textarea>");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

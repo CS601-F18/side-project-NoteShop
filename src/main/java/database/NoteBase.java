@@ -5,8 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * note data base 
+ * store the method and connection to mysql
+ * to support actions towards the notes table
+ * @author yalei
+ *
+ */
 public class NoteBase extends BasicBase{
 
+	/**
+	 * pass in the table name and connection to the mysql table
+	 * @param con
+	 * @param table
+	 */
 	public NoteBase(Connection con, String table) {
 		super(con, table);
 		// TODO Auto-generated constructor stub

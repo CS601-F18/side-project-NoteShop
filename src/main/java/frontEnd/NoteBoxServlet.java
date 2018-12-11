@@ -35,29 +35,6 @@ public class NoteBoxServlet extends BaseServlet{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-//		out.println(TableStyle);
-//		out.println("<tr><th>Note Id</th>"
-//				+ "<th>Title</th>"
-//				+ "<th>Tags</th>"
-//				+ "<th>Author</th>"
-//				+ "</tr>");
-//		try {
-//			res = gdb.getNoteData("creator", userId);
-//			while(res.next()) {
-//				int id = res.getInt("noteId");
-//				String title = res.getString("name");
-//				String tags = res.getString("tags");
-//				String author = res.getString("creator");
-//				out.println("<tr><td><a href=\"note?noteId=" + id + "\">" + id + "</a></td>"
-//						      + "<td>" + title + "</td>"
-//						      + "<td>" + tags + "</td>"
-//						      + "<td>" + author + "</td>"
-//						      + "</tr>");
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		out.println("</table>");
 		
 		out.println("<p>Received Note:</p>");
 		
@@ -68,30 +45,6 @@ public class NoteBoxServlet extends BaseServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-//		out.println(TableStyle);
-//		out.println("<tr><th>Note Id</th>"
-//				+ "<th>Title</th>"
-//				+ "<th>Tags</th>"
-//				+ "<th>Author</th>"
-//				+ "</tr>");
-//		try {
-//			res = gdb.getUserIncomeNote(userId);
-//			while(res.next()) {
-//				int id = res.getInt("noteId");
-//				String title = res.getString("name");
-//				String tags = res.getString("tags");
-//				String author = res.getString("creator");
-//				out.println("<tr><td><a href=\"note?noteId=" + id + "\">" + id + "</a></td>"
-//						      + "<td>" + title + "</td>"
-//						      + "<td>" + tags + "</td>"
-//						      + "<td>" + author + "</td>"
-//						      + "</tr>");
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		out.println("</table>");
 		out.println(footer());
 		
 	}
